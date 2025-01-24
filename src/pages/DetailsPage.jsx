@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import UseFetchDetails from "../hooks/UseFetchDetails";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import HorizontalScrollCart from "../components/HorizontalScrollCart";
+import VidieoPlay from "../components/VidieoPlay";
 function DetailsPage() {
   const { id } = useParams();
   useEffect(()=>{
@@ -14,14 +15,27 @@ function DetailsPage() {
   const params = useParams();
   // console.log("Params", params);
 
-  const { data } = UseFetchDetails( `https://api.themoviedb.org/3/${params.explore}/${params.id}?api_key=eba8b9a7199efdcb0ca1f96879b83c44`);
-  const { data: castData } = UseFetchDetails( `https://api.themoviedb.org/3/${params.explore}/${params.id}/credits?api_key=eba8b9a7199efdcb0ca1f96879b83c44`);
-  const { data: similarData } = UseFetchDetails( `https://api.themoviedb.org/3/${params.explore}/${params.id}/similar?api_key=eba8b9a7199efdcb0ca1f96879b83c44`);
-  const { data: recommendationsData } = UseFetchDetails( `https://api.themoviedb.org/3/${params.explore}/${params.id}/recommendations?api_key=eba8b9a7199efdcb0ca1f96879b83c44`);
+  const { data } = UseFetchDetails( `https://api.themoviedb.org/3/${params?.explore}/${params?.id}?api_key=eba8b9a7199efdcb0ca1f96879b83c44`);
+  const { data: castData } = UseFetchDetails( `https://api.themoviedb.org/3/${params?.explore}/${params?.id}/credits?api_key=eba8b9a7199efdcb0ca1f96879b83c44`);
+  const { data: similarData } = UseFetchDetails( `https://api.themoviedb.org/3/${params?.explore}/${params?.id}/similar?api_key=eba8b9a7199efdcb0ca1f96879b83c44`);
+  const { data: recommendationsData } = UseFetchDetails( `https://api.themoviedb.org/3/${params?.explore}/${params.id}/recommendations?api_key=eba8b9a7199efdcb0ca1f96879b83c44`);
   const { data: videoData } = UseFetchDetails( `https://api.themoviedb.org/3/${params.explore}/${params.id}/videos?api_key=eba8b9a7199efdcb0ca1f96879b83c44`);
   const trailer = videoData?.results?.find(video => video.type === "Trailer" && video.site === "YouTube");
   const trailerURL = trailer ? `https://www.youtube.com/watch?v=${trailer.key}` : null
   
+  const [playVidio, setPlayVidio] = useState(false);
+  const [videoKey, setvideoKey] = useState("");
+
+  const handelPlayVidieo =()=>{
+  if(trailer){
+    setvideoKey(trailer.key)
+    setPlayVidio(true)
+  }else{
+    alert("No trailer available") 
+  }
+  }
+
+
   // console.log("similarData11111" , similarData);
   //  console.log("VidioData ", videoData);
   //  console.log("trailerURL ", trailerURL);
@@ -34,6 +48,9 @@ function DetailsPage() {
   
   // console.log("Data", data);   //_____________________
   // console.log("Star Cast", castData); //______________
+
+
+
 
   return (
     <>
@@ -153,15 +170,12 @@ function DetailsPage() {
               <div className=" mt-4">
                 
                 <button
-                      onClick={() => { if (trailerURL) {window.open(trailerURL, "_blank"); // فتح التريلر في نافذة جديدة
-                      } 
-                       else {
-                        alert("Trailer not available!");
-                       }
-                      }}
-                      className="bg-amber-600 text-black px-6 py-2 rounded-lg font-semibold hover:bg-amber-500 hover:scale-105">
+                      onClick={handelPlayVidieo}
+                      className="bg-amber-400 text-black px-6 py-2 rounded-lg font-semibold hover:bg-gradient-to-l hover:from-red-600 hover:to-amber-500 hover:scale-105 transition-all">
                   Watch Now
                 </button>
+
+              {playVidio && <VidieoPlay videoKey={videoKey} onClose={()=>setPlayVidio(false)}/>}
                 
               </div>
             </div>
