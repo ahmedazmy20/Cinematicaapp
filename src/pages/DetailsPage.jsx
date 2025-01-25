@@ -58,7 +58,7 @@ function DetailsPage() {
        {/* The Panner */}
       <div className="w-full h-[400px]   relative">
        
-        <div className="w-full h-full bg-gradient-to-t from-slate-900 to-green-800">
+        <div className="w-full h-full bg-gradient-to-t from-slate-900 to-blue-950">
               <img
                 src={imageURL + data?.backdrop_path}
                 alt="Movie Poster"
