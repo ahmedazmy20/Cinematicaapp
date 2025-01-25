@@ -60,8 +60,8 @@ useEffect(() => {
         {bannerData.map((data, index) => {
           // console.log("data", data);
 
-          return (
-            <div key={index} className="min-w-full min-h-[450px] lg:min-h-full overflow-hidden relative group transition-all "  style={{transform :`translateX(-${currentImage * 100}%)`}} >
+          return (<>
+          <div key={index} className="min-w-full min-h-[450px] lg:min-h-full overflow-hidden relative group transition-all "  style={{transform :`translateX(-${currentImage * 100}%)`}} >
               <div className="w-full h-full">
                 <img
                   src={imageURL + data.backdrop_path}
@@ -81,8 +81,8 @@ useEffect(() => {
 
               <div className="absolute top-0 w-full h-full bg-gradient-to-t from-slate-900 to-transparent"></div>
             
-               <div className="container mx-auto ">
-                <div className=" text-center  p-10 px-5 absolute bottom-0  max-w-md z-10">
+                <div className="container mx-auto  ">
+                <div className=" text-center   px-5 absolute bottom-0  max-w-md z-10">
                   <h2 className="text-2xl lg:text-5xl text-white drop-shadow-2xl font-bold ">
                     {data?.title || data?.name}
                   </h2>
@@ -100,7 +100,22 @@ useEffect(() => {
                 </div>
               </div>
 
+              <div>
+              <div className="absolute  top-32 right-28    max-w-52 lg:top-24 lg:max-w-72  hidden md:block  "> 
+               <img
+                  src={imageURL + data?.poster_path}
+                  alt=""
+                  className="object-cover h-full w-full rounded-3xl "
+                />
+                </div>
+              </div>
+
             </div>
+
+            
+          </>
+            
+            
           );
         })}
       </div>

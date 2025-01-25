@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CardForPopular from "../components/CardForPopular";
+import hero from "../assets/hero-img.png";
 
 function ExplorePage() {
   const params = useParams();
@@ -42,11 +43,10 @@ function ExplorePage() {
   }, [pageNo]);
 
   useEffect(() => {
-    setPageNo(1)
-    setData([])
-    fetchData()
-  }, [params.explore])
-  
+    setPageNo(1);
+    setData([]);
+    fetchData();
+  }, [params.explore]);
 
   useEffect(() => {
     window.addEventListener("scroll", handelScroll);
@@ -54,18 +54,28 @@ function ExplorePage() {
 
   return (
     <>
-      <div className="pt-16 ms-6">
+      <div  className="bg-gradient-to-b from-blue-950 to-transparent">
+        <div className=" flex justify-center items-center">
+          <img src={hero} alt="" />
+        </div>
+      </div>
+      <div className="ms-6">
         <div className="container mx-auto ">
-          <h3 className="capitalize text-lg lg:text-xl font-semibold my-3"> Popular {params.explore} show </h3>
+          <h3 className="capitalize text-lg lg:text-xl font-semibold my-3">
+            {" "}
+            Popular {params.explore} show{" "}
+          </h3>
           <div className="grid grid-cols-2 gap-y-6 md:grid-cols-[repeat(auto-fit,230px)] md:gap-6">
-            {
-              data.map((exploreData, index) => {
-                return (
-                  <CardForPopular  key={index} data={exploreData} media_type={params.explore} />
-                  // <Card  key={index} data={exploreData} media_type={params.explore} />
-                )
-              })
-            } 
+            {data.map((exploreData, index) => {
+              return (
+                <CardForPopular
+                  key={index}
+                  data={exploreData}
+                  media_type={params.explore}
+                />
+                // <Card  key={index} data={exploreData} media_type={params.explore} />
+              );
+            })}
           </div>
         </div>
       </div>

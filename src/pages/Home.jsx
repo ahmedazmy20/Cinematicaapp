@@ -1,5 +1,6 @@
 import React from "react";
 import BannerHome from "../components/BannerHome";
+import hero from "../assets/hero-img.png";
 import HorizontalScrollCart from "../components/HorizontalScrollCart";
 import UseFetch from "../hooks/UseFetch";
 
